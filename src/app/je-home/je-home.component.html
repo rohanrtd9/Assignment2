@@ -1,0 +1,135 @@
+
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Meter disconnection portal</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto m-2">
+          <li class="nav-item">
+            <button type="button" class="btn btn-light"  (click)="showMappingChange()">
+              Add/Delete Lineman
+            </button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-light" (click)="showAssignWork()">
+              Allocate Work
+            </button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-light" (click)="showAllocatedWork()">
+              View assigned work
+            </button>
+          </li>
+         
+        </ul>
+  
+      </div>
+    </div>
+  </nav>
+
+  <div class="card col-sm-10 mx-auto mt-5" *ngIf="showMapping">
+    <div class="card-header ">
+      <h4 class="m-2">Add/Delete Lineman</h4>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title m-2">Mapped line man list</h5>
+      <p class="card-text m-2">Welcome {{JE}}, these line men are currently working under you.</p>
+      <form #jeFormDel="ngForm" (ngSubmit)="deleteMapJeLm(jeFormDel.value)">
+        <select class="col-sm-2 m-2" ngModel id="lineman" name="lineman">
+      
+            <option *ngFor="let player of lMan" value='{{player.id}}'>
+                {{player["Line Man"]}}
+            </option>
+        </select>
+
+        <button type="button" class="btn btn-danger " type="submit">Remove</button>
+      </form>
+    </div>
+    <div class="card-footer ">
+      <h5 class="card-title m-2">Not mapped line men list</h5>
+      <p class="card-text m-2">Welcome {{JE}}, these are all line men.</p>
+      <form #jeFormAdd="ngForm" (ngSubmit)="putMapJeLm(jeFormAdd.value)">
+        <select class="col-sm-2 m-2" ngModel id="linemanAdd" name="linemanAdd">
+      
+            <option *ngFor="let player of lManNotJe" value='{{player["Line Man"]}}'>
+                {{player["Line Man"]}}
+            </option>
+        </select>
+
+        <button type="button" class="btn btn-success" type="submit">Add</button>
+      </form>
+    </div>
+  </div>
+
+
+
+  <div class="card col-sm-10 mx-auto mt-5" *ngIf="showWorkAssign && !showMapping">
+    <div class="card-header ">
+      <h4 class="m-2">Assign work</h4>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title m-2">Currently mapped line mans are list</h5>
+      <p class="card-text m-2">Welcome {{JE}}, these line men are currently working under you.</p>
+      <form #jeForm="ngForm" (ngSubmit)="putWork(jeForm.value)">
+        <select class="col-sm-2 m-2" ngModel id="lineman" name="lineman">
+      
+            <option *ngFor="let player of lMan" value='{{player["Line Man"]}}'>
+                {{player["Line Man"]}}
+            </option>
+        </select>
+
+        <input ngModel class="col-sm-4 m-2"placeholder="Task Description" id="taskDesc" name="taskDesc"/>
+
+        <div class="col-sm-6 m-2">
+          <label for="formFile" class="form-label">Please enter sheet url</label>
+          <input ngModel class="form-control" type="text" id="taskUrl" name="taskUrl" />
+          <button type="button" class="btn btn-primary mt-3" type="submit" data-toggle="modal" data-bs-target="#exampleModal1" data-bs-toggle="modal">Add task</button>
+        </div>
+
+        
+      
+      </form>
+    </div>
+    <div class="card-footer text-muted">
+      Have a nice day!
+    </div>
+  </div>
+
+  <div class="card col-sm-10 mx-auto mt-5" *ngIf="!showWorkAssign && !showMapping">
+    <div class="card-header">
+      View Assgined work
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Welcome to meter disco</h5>
+      <p class="card-text">Welcome to UPPCL Sampark app. This site is under construction.</p>
+      <a class="btn btn-primary" href="https://www.upenergy.in/">Go to UPPCL Home</a>
+    </div>
+    <div class="card-footer text-muted">
+      Have a nice day!
+    </div>
+  </div>
+
+ <!-- Modal -->
+ <div class="modal fade " id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content alert-success">
+      <div class="modal-header alert alert-success">
+        
+          <h5 class="modal-title " id="exampleModalLabel" >Assigned!
+        </h5>
+        
+        
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="refresh()"></button>
+      </div>
+      <div class="modal-body">
+        <div><p>Task assigned successfully. Please check progress in "View assigned work tab".</p></div>
+        
+      </div>
+    </div>
+    
+  
+  </div>
+</div>
